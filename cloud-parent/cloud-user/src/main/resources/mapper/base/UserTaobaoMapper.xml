@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.user.dao.base.UserTaobaoMapper">
+  <resultMap id="BaseResultMap" type="com.cloud.user.dao.base.model.UserTaobao">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="sex" jdbcType="BIT" property="sex" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="credit_lv" jdbcType="INTEGER" property="creditLv" />
+    <result column="tb_account" jdbcType="VARCHAR" property="tbAccount" />
+    <result column="tb_popularity" jdbcType="INTEGER" property="tbPopularity" />
+    <result column="delivery_phone" jdbcType="CHAR" property="deliveryPhone" />
+    <result column="delivery_name" jdbcType="VARCHAR" property="deliveryName" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="distric" jdbcType="VARCHAR" property="distric" />
+    <result column="delivery_address" jdbcType="VARCHAR" property="deliveryAddress" />
+    <result column="order_tail" jdbcType="CHAR" property="orderTail" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="my_tb_img" jdbcType="VARCHAR" property="myTbImg" />
+    <result column="eval_img" jdbcType="VARCHAR" property="evalImg" />
+    <result column="alipay_auth_img" jdbcType="VARCHAR" property="alipayAuthImg" />
+    <result column="shopping_tag" jdbcType="VARCHAR" property="shoppingTag" />
+    <result column="hb_img" jdbcType="VARCHAR" property="hbImg" />
+    <result column="hb_status" jdbcType="INTEGER" property="hbStatus" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, sex, name, credit_lv, tb_account, tb_popularity, delivery_phone, delivery_name, 
+    province, city, distric, delivery_address, order_tail, status, my_tb_img, eval_img, 
+    alipay_auth_img, shopping_tag, hb_img, hb_status, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.cloud.user.dao.base.model.UserTaobaoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_taobao
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_taobao
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_taobao
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cloud.user.dao.base.model.UserTaobaoExample">
+    delete from user_taobao
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cloud.user.dao.base.model.UserTaobao">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_taobao (user_id, sex, name, 
+      credit_lv, tb_account, tb_popularity, 
+      delivery_phone, delivery_name, province, 
+      city, distric, delivery_address, 
+      order_tail, status, my_tb_img, 
+      eval_img, alipay_auth_img, shopping_tag, 
+      hb_img, hb_status, create_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{sex,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, 
+      #{creditLv,jdbcType=INTEGER}, #{tbAccount,jdbcType=VARCHAR}, #{tbPopularity,jdbcType=INTEGER}, 
+      #{deliveryPhone,jdbcType=CHAR}, #{deliveryName,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{distric,jdbcType=VARCHAR}, #{deliveryAddress,jdbcType=VARCHAR}, 
+      #{orderTail,jdbcType=CHAR}, #{status,jdbcType=INTEGER}, #{myTbImg,jdbcType=VARCHAR}, 
+      #{evalImg,jdbcType=VARCHAR}, #{alipayAuthImg,jdbcType=VARCHAR}, #{shoppingTag,jdbcType=VARCHAR}, 
+      #{hbImg,jdbcType=VARCHAR}, #{hbStatus,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloud.user.dao.base.model.UserTaobao">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_taobao
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="creditLv != null">
+        credit_lv,
+      </if>
+      <if test="tbAccount != null">
+        tb_account,
+      </if>
+      <if test="tbPopularity != null">
+        tb_popularity,
+      </if>
+      <if test="deliveryPhone != null">
+        delivery_phone,
+      </if>
+      <if test="deliveryName != null">
+        delivery_name,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="distric != null">
+        distric,
+      </if>
+      <if test="deliveryAddress != null">
+        delivery_address,
+      </if>
+      <if test="orderTail != null">
+        order_tail,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="myTbImg != null">
+        my_tb_img,
+      </if>
+      <if test="evalImg != null">
+        eval_img,
+      </if>
+      <if test="alipayAuthImg != null">
+        alipay_auth_img,
+      </if>
+      <if test="shoppingTag != null">
+        shopping_tag,
+      </if>
+      <if test="hbImg != null">
+        hb_img,
+      </if>
+      <if test="hbStatus != null">
+        hb_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="creditLv != null">
+        #{creditLv,jdbcType=INTEGER},
+      </if>
+      <if test="tbAccount != null">
+        #{tbAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="tbPopularity != null">
+        #{tbPopularity,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryPhone != null">
+        #{deliveryPhone,jdbcType=CHAR},
+      </if>
+      <if test="deliveryName != null">
+        #{deliveryName,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="distric != null">
+        #{distric,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryAddress != null">
+        #{deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTail != null">
+        #{orderTail,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="myTbImg != null">
+        #{myTbImg,jdbcType=VARCHAR},
+      </if>
+      <if test="evalImg != null">
+        #{evalImg,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAuthImg != null">
+        #{alipayAuthImg,jdbcType=VARCHAR},
+      </if>
+      <if test="shoppingTag != null">
+        #{shoppingTag,jdbcType=VARCHAR},
+      </if>
+      <if test="hbImg != null">
+        #{hbImg,jdbcType=VARCHAR},
+      </if>
+      <if test="hbStatus != null">
+        #{hbStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cloud.user.dao.base.model.UserTaobaoExample" resultType="java.lang.Long">
+    select count(*) from user_taobao
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_taobao
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=BIT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditLv != null">
+        credit_lv = #{record.creditLv,jdbcType=INTEGER},
+      </if>
+      <if test="record.tbAccount != null">
+        tb_account = #{record.tbAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tbPopularity != null">
+        tb_popularity = #{record.tbPopularity,jdbcType=INTEGER},
+      </if>
+      <if test="record.deliveryPhone != null">
+        delivery_phone = #{record.deliveryPhone,jdbcType=CHAR},
+      </if>
+      <if test="record.deliveryName != null">
+        delivery_name = #{record.deliveryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distric != null">
+        distric = #{record.distric,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryAddress != null">
+        delivery_address = #{record.deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderTail != null">
+        order_tail = #{record.orderTail,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.myTbImg != null">
+        my_tb_img = #{record.myTbImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evalImg != null">
+        eval_img = #{record.evalImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayAuthImg != null">
+        alipay_auth_img = #{record.alipayAuthImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shoppingTag != null">
+        shopping_tag = #{record.shoppingTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hbImg != null">
+        hb_img = #{record.hbImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hbStatus != null">
+        hb_status = #{record.hbStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_taobao
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=BIT},
+      name = #{record.name,jdbcType=VARCHAR},
+      credit_lv = #{record.creditLv,jdbcType=INTEGER},
+      tb_account = #{record.tbAccount,jdbcType=VARCHAR},
+      tb_popularity = #{record.tbPopularity,jdbcType=INTEGER},
+      delivery_phone = #{record.deliveryPhone,jdbcType=CHAR},
+      delivery_name = #{record.deliveryName,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      distric = #{record.distric,jdbcType=VARCHAR},
+      delivery_address = #{record.deliveryAddress,jdbcType=VARCHAR},
+      order_tail = #{record.orderTail,jdbcType=CHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      my_tb_img = #{record.myTbImg,jdbcType=VARCHAR},
+      eval_img = #{record.evalImg,jdbcType=VARCHAR},
+      alipay_auth_img = #{record.alipayAuthImg,jdbcType=VARCHAR},
+      shopping_tag = #{record.shoppingTag,jdbcType=VARCHAR},
+      hb_img = #{record.hbImg,jdbcType=VARCHAR},
+      hb_status = #{record.hbStatus,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloud.user.dao.base.model.UserTaobao">
+    update user_taobao
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="creditLv != null">
+        credit_lv = #{creditLv,jdbcType=INTEGER},
+      </if>
+      <if test="tbAccount != null">
+        tb_account = #{tbAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="tbPopularity != null">
+        tb_popularity = #{tbPopularity,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryPhone != null">
+        delivery_phone = #{deliveryPhone,jdbcType=CHAR},
+      </if>
+      <if test="deliveryName != null">
+        delivery_name = #{deliveryName,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="distric != null">
+        distric = #{distric,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryAddress != null">
+        delivery_address = #{deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTail != null">
+        order_tail = #{orderTail,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="myTbImg != null">
+        my_tb_img = #{myTbImg,jdbcType=VARCHAR},
+      </if>
+      <if test="evalImg != null">
+        eval_img = #{evalImg,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAuthImg != null">
+        alipay_auth_img = #{alipayAuthImg,jdbcType=VARCHAR},
+      </if>
+      <if test="shoppingTag != null">
+        shopping_tag = #{shoppingTag,jdbcType=VARCHAR},
+      </if>
+      <if test="hbImg != null">
+        hb_img = #{hbImg,jdbcType=VARCHAR},
+      </if>
+      <if test="hbStatus != null">
+        hb_status = #{hbStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloud.user.dao.base.model.UserTaobao">
+    update user_taobao
+    set user_id = #{userId,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=BIT},
+      name = #{name,jdbcType=VARCHAR},
+      credit_lv = #{creditLv,jdbcType=INTEGER},
+      tb_account = #{tbAccount,jdbcType=VARCHAR},
+      tb_popularity = #{tbPopularity,jdbcType=INTEGER},
+      delivery_phone = #{deliveryPhone,jdbcType=CHAR},
+      delivery_name = #{deliveryName,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      distric = #{distric,jdbcType=VARCHAR},
+      delivery_address = #{deliveryAddress,jdbcType=VARCHAR},
+      order_tail = #{orderTail,jdbcType=CHAR},
+      status = #{status,jdbcType=INTEGER},
+      my_tb_img = #{myTbImg,jdbcType=VARCHAR},
+      eval_img = #{evalImg,jdbcType=VARCHAR},
+      alipay_auth_img = #{alipayAuthImg,jdbcType=VARCHAR},
+      shopping_tag = #{shoppingTag,jdbcType=VARCHAR},
+      hb_img = #{hbImg,jdbcType=VARCHAR},
+      hb_status = #{hbStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
